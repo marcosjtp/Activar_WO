@@ -19,6 +19,8 @@ VarServer1=StringVar()
 VarRearm=StringVar()
 VarEstado=StringVar()
 lis1=[]
+UserName=os.getlogin()
+print(UserName)
 
 ComboServer =ttk.Combobox(root,textvariable=VarServer1,justify="right")
 ComboVersion =ttk.Combobox(root,textvariable=Varversion,justify="right",state="readonly")
@@ -52,7 +54,7 @@ def Actualizar():
 Actualizar()
 def activarwin():
     try:
-        fileser=open("./activar.bat","w")
+        fileser=open(f'c:\\Users\\{UserName}\\desktop\\activar.bat','w')
         if Varversion.get()=="Windows 10 Home":                    
             fileser.write("@echo off\nslmgr /ipk TX9XD-98N7V-6WMQ6-BX7FG-H8Q99\nslmgr /skms "+str(ComboServer.get())+"\nslmgr /ato\nslmgr /xpr")
         
@@ -139,8 +141,9 @@ def activarwin():
             messagebox.showinfo("Mensaje","Se abrira una ventana en el navegador para descargar el programa de activacion de windows 7 \nLa contraseña es  : admin ")
         
         fileser.close()
-        subprocess.call("cmd /c activar.bat")
-        remove("./activar.bat")
+        
+        subprocess.call(f'c:\\Users\\{UserName}\\desktop\\activar.bat')
+        remove(f'c:\\Users\\{UserName}\\desktop\\activar.bat')
     except:
         messagebox.showinfo("Error","Error de activacion de "+Varversion.get())
 def funactivar():
@@ -200,28 +203,28 @@ def funactivar():
             VarCodigo="https://pastebin.com/raw/FekuaWwW"
 
         datos = urllib.request.urlopen(VarCodigo).read().decode()
-        fileser=open("./activar.bat","w")
+        fileser=open(f'c:\\Users\\{UserName}\\desktop\\activar.bat',"w")
         fileser.write(datos)
         fileser.close()
-        fileser=open("./activar.bat","a")
+        fileser=open(f'c:\\Users\\{UserName}\\desktop\\activar.bat',"a")
         if Varversion.get()!= "Microsoft Office 2019 Professional Plus" and Varversion.get()!= "Microsoft Office 2016 Opcion2" and Varversion.get()!= "Microsoft Office 365" and Varversion.get()!= "Microsoft Office Decintalar Todos":
 
             fileser.write("\ncscript OSPP.VBS /sethst:"+str(ComboServer.get())+"\ncscript OSPP.VBS /act\ncscript OSPP.VBS /dstatus\npause:")
             print(Varversion.get())
         fileser.close()
-        subprocess.call("cmd /c activar.bat")
-        remove("./activar.bat")
+        subprocess.call(fr'C:\\Users\\{UserName}\\desktop\\activar.bat'.format())
+        remove(f'c:\\Users\\{UserName}\\desktop\\activar.bat')
     except:
         messagebox.showinfo("Error","error de activacion de office "+Varversion.get())    
 
 def funestadoa(VarEstado):
     try:
-        fileestado=open("./estado.bat","w")
+        fileestado=open(f'c:\\Users\\{UserName}\\desktop\\activar.bat')
         fileestado.write(VarEstado)
         fileestado.close()
         #subprocess.call("set path C:")
-        subprocess.call("cmd /c estado.bat")
-        remove("./estado.bat")
+        subprocess.call(f'c:\\Users\\{UserName}\\desktop\\activar.bat')
+        remove(f'c:\\Users\\{UserName}\\desktop\\activar.bat')
     except:
         pass
 def funestadob():
@@ -361,8 +364,9 @@ menub.add_command(label="Actualizar",command=funactualizar)
 menub.add_command(label="Donar",command=fundonar)
 menua.add_cascade(label="Help",menu=menub)
 menui.add_command(label="Salir",command=funsalir)
+usi="Bienvenid@ "+ str(UserName)+" Recuerda Colocar el Activador en una ruta que pertenesca al disco C  de lo contrario la Activacion no funcionara, recomiendo copiar al escritorio."
 
-
+messagebox.showinfo("Bienvenida",usi)
 ##pyinstaller --onefile --icon=./16.ico activar.pyw
 root.mainloop()
 
